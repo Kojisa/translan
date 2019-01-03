@@ -25,25 +25,29 @@ export default class Principal extends Component{
         }
     }
 
+    seleccionarRemiseria(id){
+      this.setState({seleccionada:id});
+    }
+
 
     render(){
         let render = null;
         let listado  = <Paper style={{width:'400px',maxWidth:'90wv',display:'inline-block',margin:'20px'}}>
                             <div style={{margin:'5px'}}>
                                 <div style={{display:'inline-block'}}>
-                                    
+
                                     <TextField value={this.state.preFiltro} onChange={(ev)=>(this.setState({preFiltro:ev.target.value}))}
                                     id='textoBusqueda' label='Busqueda'
                                     ></TextField>
-                                    
+
                                     <FormControl>
                                         <InputLabel htmlFor='tipoBusqueda' shrink> Tipo de filtro </InputLabel>
                                         <Select native id='tipoBusqueda'
-                                        value={this.state.tipoFiltro} 
+                                        value={this.state.tipoFiltro}
                                         onChange={(ev)=>this.setState({tipoFiltro:ev.target.value})}>
 
                                             {this.state.TiposFiltro.map((elem,ind)=><option value={elem.valor} key={ind} >{elem.texto}</option>)}
-                                        
+
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -53,10 +57,10 @@ export default class Principal extends Component{
                                     <AddIcon/>
                                 </Fab>
                             </div>
-                            
-                            <Listado></Listado>
+
+                            <Listado funSelec={this.seleccionarRemiseria.bind(this)} ></Listado>
                         </Paper>
-        
+
         if(this.state.nueva == true){
             render = <Paper style={{display:'inline-block',verticalAlign:'top',minWidth:'300px',margin:'5px'}}>
                 <Fab size='small' arial-label='Return' onClick={()=>this.setState({nueva:false})} color='primary'
@@ -65,7 +69,7 @@ export default class Principal extends Component{
                 </Fab>
                 <Amb></Amb>
             </Paper>
-            
+
         }
         else{
             render = listado
@@ -74,7 +78,7 @@ export default class Principal extends Component{
         return(
             <div>
                 {render}
-                
+
             </div>
         )
     }
