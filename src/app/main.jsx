@@ -1,7 +1,14 @@
 import React,{Component} from 'react';
-import {IconButton,Input,Paper,AppBar
-    ,Toolbar,Typography,withStyles,createMuiTheme} from '@material-ui/core';
-import Remiserias from './remiserias/Remiserias'
+import {IconButton,Input,Paper,AppBar,Button
+    ,Toolbar,Typography,withStyles,Fab} from '@material-ui/core';
+import NuevoAgente from './Agentes/NuevoAgente';
+import NuevoVehiculo from './Vehiculos/NuevoVehiculo';
+import MuestraAgentes from './Agentes/MuestraDeAgentes';
+import MuestraVehiculo from './Vehiculos/MuestraDeVehiculos';
+
+import VehiIcon from '@material-ui/icons/DirectionsCar';
+import PerIcon from '@material-ui/icons/People';
+import IndivIcon from '@material-ui/icons/Person';
 
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -10,8 +17,9 @@ let MAXTAMBOTONES = '200px'
 let TAMBOTONES = '20wv'
 
 let BOTONES = [
-    {nombre:'Remiserias',icono:'',vista:<Remiserias></Remiserias>},
-    {nombre:'Colectivos',icono:'',vista:()=>console.log('Colectivos')}
+    {nombre:'Agencias',icono:<PerIcon/>,vista:<MuestraAgentes/>},
+    {nombre:'Vehiculos',icono:<VehiIcon/>,vista: <MuestraVehiculo/>},
+    {nombre:'Personas',icono:<IndivIcon/>,vista:null}
 ]
 
 let style = {
@@ -52,7 +60,12 @@ class Botonera extends Component{
             </IconButton>)
         })
 
-        return lista
+        return this.state.botones.map((elem,index)=><Button variant='contained' color='primary' onClick={()=>this.funVista(elem)}
+                                                     style={{marginLeft:'10px',display:'inline-block'}}
+                                                    >
+                                                    {elem.nombre}
+                                                    {elem.icono}
+                                                    </Button>)
     }
 
     render(){
