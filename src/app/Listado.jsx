@@ -5,8 +5,8 @@ export default class Listado extends Component{
     constructor(props){
         super(props);
         this.state={
-            items:[{"nombre":'Remiseria1',"direccion":'Humberto 432','telefono':'1112312'},
-                {"nombre":'Remiseria2',"direccion":'Falucho 2123','telefono':'123123'}],
+            items:[{"nombre":'Remiseria1',"direccion":'Humberto 432','telefono':'1112312','id':0},
+                {"nombre":'Remiseria2',"direccion":'Falucho 2123','telefono':'123123','id':1}],
             filtros:props.filtros,
             filtro:null,
             camposBasicos:["nombre","direccion","telefono"],
@@ -18,10 +18,17 @@ export default class Listado extends Component{
 
     componentWillReceiveProps(props){
         this.setState({
-            filtros:props.filtros
+            filtros:props.filtros,
+            items:[{"nombre":'Remiseria1',"direccion":'Humberto 432','telefono':'1112312','id':0},
+                {"nombre":'Remiseria2',"direccion":'Falucho 2123','telefono':'123123','id':1}],
+            filtro:null,
+            camposBasicos:["nombre","direccion","telefono"],
+            equivalencias:{"nombre":"Nombre",'direccion':'Dirección','telefono':'Tel.'},
         })
+        this.uncionPedirInfo = props.funPedirInfo;
+        this.funSeleccionar = props.funSelec;
     }
-    
+
 
     armarTarjetas(){
         let datos = this.state.items;
@@ -32,11 +39,11 @@ export default class Listado extends Component{
         }
 
         let tarjetas = datos.map((elem,ind)=><Tarjeta info={elem} campos={campos}
-         equivalencias={equivalencias} 
-         funseleccionar={this.funSeleccionar} key={ind} filtro={this.state.filtro} ></Tarjeta>)
+         equivalencias={equivalencias}
+         funSeleccionar={this.funSeleccionar} key={ind} filtro={this.state.filtro} ></Tarjeta>)
 
         return tarjetas
-        
+
     }
 
 
@@ -44,9 +51,9 @@ export default class Listado extends Component{
         return(
             <div>
                 <List>
-                    {this.armarTarjetas()}    
+                    {this.armarTarjetas()}
                 </List>
-                
+
             </div>
         )
     }
@@ -70,8 +77,9 @@ class Tarjeta extends Component{
             info:props.info,
             campos:props.campos,
             campoFiltrado:props.filtro,
-            equivalencias:props.equivalencias
+            equivalencias:props.equivalencias,
         })
+        this.funSelect = props.funSeleccionar;
     }
 
     cargarCampos(){
@@ -85,7 +93,7 @@ class Tarjeta extends Component{
 
 
         let texto = campos.map((elem,ind)=><div key={ind} style={{lineHeight:'0.2em'}}>
-            <Typography style={{display:'inline-block',marginRight:'5px'}}>{equivs[elem]}: </Typography>
+            <Typography style={{display:'inline-block',marginRight:'5px'}} variant='button' >{equivs[elem]}: </Typography>
             <Typography style={{display:'inline-block'}}>{info[elem]}</Typography>
         </div>)
 
@@ -101,7 +109,7 @@ class Tarjeta extends Component{
 
     render(){
         return(
-            <ListItem divider={true} button={true}>
+            <ListItem divider={true} button={true} onClick={()=>this.funSelect(this.state.info.id)} >
                 <div>
                     {this.cargarCampos()}
                 </div>
