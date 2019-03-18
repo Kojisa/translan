@@ -13,12 +13,12 @@ export default class Contenedor extends Component{
             prefiltro:'',
             tipos:['Todos','Escolares','Remiseria'],
             tipo:'Todos',
-            agencias:[{'Razon':'Remis Nico','Tipo':'Remiseria'},
-                    {'Razon':'S.A. Bondi','Tipo':'Escolares'},{'Razon':'S.A. Bondi','Tipo':'Escolares'},
-                    {'Razon':'S.A. Bondi','Tipo':'Escolares'},{'Razon':'Remis Nico','Tipo':'Remiseria'},
-                    {'Razon':'S.A. Bondi','Tipo':'Escolares'},{'Razon':'Remis Nico','Tipo':'Remiseria'},
-                    {'Razon':'S.A. Bondi','Tipo':'Escolares'},{'Razon':'Remis Nico','Tipo':'Remiseria'},
-                    {'Razon':'S.A. Bondi','Tipo':'Escolares'},],
+            agencias:[{'Dominio':'ABX 019','Tipo':'Remis'},
+                    {'Dominio':'AIE 193','Tipo':'Remis'},{'Dominio':'RUH 417','Tipo':'Escolar'},
+                    {'Dominio':'XNA 903','Tipo':'Remis'},{'Dominio':'NKF 831','Tipo':'Escolar'},
+                    {'Dominio':'BJA 591','Tipo':'Escolar'},{'Dominio':'LAK 481','Tipo':'Remis'},
+                    {'Dominio':'EOQ 019','Tipo':'Escolar'},{'Dominio':'REI 341','Tipo':'Remis'},
+                    {'Dominio':'GKA 510','Tipo':'Escolar'},],
             criterios:['Razon','Localidad','CUIT'],
             criterio:'',
             elegido:null,
@@ -93,17 +93,22 @@ class Tarjetas extends Component{
         let claves =  Object.keys(datos);
         let lista = []
         for(let x = 0; x < claves.length; x++){
-            lista.push(<Typography variant='body1' ><b>{claves[x]}:</b> {datos[claves[x]]}</Typography>)
+            lista.push(<Typography variant='body1' style={{color:'#ffffff'}} ><b>{claves[x]}:</b> {datos[claves[x]]}</Typography>)
         }
         return lista;
     }
 
     render(){
+
+        let color = "#0288D1"
+        if(this.state.datos['Tipo'] === 'Remis' ){
+            color = "#00796B"
+        }
         
 
         return(
             <Grid item xs >
-                <Paper  style={{display:'inline-block',minWidth:'250px'}}
+                <Paper  style={{backgroundColor:color,display:'inline-block',minWidth:'250px'}}
                     onClick={this.elegir}
                 >
                     {this.cargarDatos.bind(this)()}
