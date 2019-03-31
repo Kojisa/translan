@@ -1,38 +1,36 @@
 import React,{Component} from 'react';
-import {Grid,Typography,TextField,MenuItem,Paper,Fab} from '@material-ui/core';
+import {Dialog,Paper,Button,Grid,Typography,TextField,
+MenuItem,Fab} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import NuevoAgente from './NuevoVehiculo';
-import VistaVehiculo from './VistaVehiculo';
+import NuevaPersona from './IngresoPersona';
+import VistaPersona from './VistaPersona';
 
 
 export default class Contenedor extends Component{
     constructor(props){
         super(props);
-        this.state ={
+        this.state = {
             filtro:'',
             prefiltro:'',
-            tipos:['Todos','Escolares','Remiseria'],
-            tipo:'Todos',
-            agencias:[{'Dominio':'ABX 019','Tipo':'Remis'},
-                    {'Dominio':'AIE 193','Tipo':'Remis'},{'Dominio':'RUH 417','Tipo':'Escolar'},
-                    {'Dominio':'XNA 903','Tipo':'Remis'},{'Dominio':'NKF 831','Tipo':'Escolar'},
-                    {'Dominio':'BJA 591','Tipo':'Escolar'},{'Dominio':'LAK 481','Tipo':'Remis'},
-                    {'Dominio':'EOQ 019','Tipo':'Escolar'},{'Dominio':'REI 341','Tipo':'Remis'},
-                    {'Dominio':'GKA 510','Tipo':'Escolar'},],
-            criterios:['Razon','Localidad','CUIT'],
+            criterios:['Nombre/Apellido','DNI','Localidad'],
             criterio:'',
             elegido:null,
             agregando:false,
+            personas:[
+                {'Nombre':'Juan Perez','DNI':'13401921'},
+                {'Nombre':'Jorge Gonzales','DNI':'20154312'},
+                {'Nombre':'Marta Lopez','DNI':'25092812'},
+                {'Nombre':'Carlos Ezequiel Hernandez','DNI':'30198321'}
+            ],
         }
-
     }
 
 
-    render(){
 
+    render(){
         let popup = null;
         if(this.state.agregando){
-            popup=<NuevoAgente salir={()=>this.setState({agregando:false})} ></NuevoAgente>
+            popup=<NuevaPersona salir={()=>this.setState({agregando:false})} ></NuevaPersona>
         }
 
         return(
@@ -47,13 +45,7 @@ export default class Contenedor extends Component{
                                 value={this.state.prefiltro}
                                 label="Busqueda"
                                 onChange={(ev)=>this.setState({prefiltro:ev.target.value})}/>
-                        <TextField
-                            style={{marginLeft:'10px',width:'130px'}}
-                            value={this.state.criterio} select label='Tipo'
-                            onChange={(ev)=>this.setState({criterio:ev.target.value})}
-                            > 
-                            {this.state.tipos.map((elem,ind)=><MenuItem value={elem} key={ind}>{elem}</MenuItem>)}
-                        </TextField>
+                        
                         <Fab size='small' aria-label='Add' onClick={()=>this.setState({agregando:true})}
                                         color='primary' style={{marginLeft:'10px',display:'inline-block'}}
                                         >
@@ -62,7 +54,7 @@ export default class Contenedor extends Component{
                         </div>
                     </Grid>
                     <Grid container direction='row' style={{marginTop:'10px'}} justify='flex-start'>
-                        {this.state.agencias.map((elem,ind)=><Tarjetas datos={elem} key={ind}
+                        {this.state.personas.map((elem,ind)=><Tarjetas datos={elem} key={ind}
                         elegir={()=>console.log(elem)}></Tarjetas>)}
                     </Grid>
 
@@ -70,7 +62,7 @@ export default class Contenedor extends Component{
                 </Grid>
             
             <div style={{margin:'10px',display:'inline-block'}} >
-                <VistaVehiculo></VistaVehiculo>
+                <VistaPersona></VistaPersona>
             </div>
             </Grid>
         </div>)

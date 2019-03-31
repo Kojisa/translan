@@ -5,6 +5,9 @@ import NuevoAgente from './Agentes/NuevoAgente';
 import NuevoVehiculo from './Vehiculos/NuevoVehiculo';
 import MuestraAgentes from './Agentes/MuestraDeAgentes';
 import MuestraVehiculo from './Vehiculos/MuestraDeVehiculos';
+import MuestraPersonas from './Personas/MuestraDePersonas';
+import NuevaPersona from './Personas/IngresoPersona';
+import MuestraMapa from './Mapa/VistaMapa';
 
 import VehiIcon from '@material-ui/icons/DirectionsCar';
 import PerIcon from '@material-ui/icons/People';
@@ -19,7 +22,8 @@ let TAMBOTONES = '20wv'
 let BOTONES = [
     {nombre:'Agencias',icono:<PerIcon/>,vista:<MuestraAgentes/>},
     {nombre:'Vehiculos',icono:<VehiIcon/>,vista: <MuestraVehiculo/>},
-    {nombre:'Personas',icono:<IndivIcon/>,vista:null}
+    {nombre:'Personas',icono:<IndivIcon/>,vista:<MuestraPersonas/>},
+    {nombre:'Mapa',icono:null,vista:<MuestraMapa/>}
 ]
 
 let style = {
