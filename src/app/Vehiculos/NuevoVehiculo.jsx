@@ -7,7 +7,7 @@ import {GenerarCampo} from '../Campos';
 import {ObtenerPlantilla} from '../Plantillas';
 import IngresoPersona from '../Personas/IngresoPersona';
 import PantallaFinal from '../PantallaFinalIngreso';
-import AsignarAgencia from './AsignarAgencia';
+import AsignarAgencia from '../Asignaciones/AsignarAgencia';
 
 
 
@@ -101,9 +101,9 @@ export default class Principal extends Component{
             this.setState({confirmando:false,
                             etapa:etapa+1,
                             contStep: <div>
-                                    <Typography variant='h4'>Datos del Propietario</Typography>
+                                    <Typography variant='h4'>Datos de la Persona</Typography><br/>
                                     <IngresoPersona actualizar={this.actualizarResponsable.bind(this)} 
-                                valores = {this.state.valoresResponsable}
+                                valores = {this.state.valoresResponsable} dialogo={false}
                                 ></IngresoPersona>
                                 </div>
                 
@@ -146,7 +146,7 @@ export default class Principal extends Component{
         return( 
             <div >
                 <Dialog onEscapeKeyDown={this.salir} onBackdropClick={this.salir}
-                style={{height:'90vh',width:'90vw',display:'block',textAlign:'center'}}
+                style={{height:'90%',width:'90%',textAlign:'center'}} maxWidth='md'
                     open={this.state.estadoMostrar}
                 >
                     <div>
@@ -184,7 +184,7 @@ class AMB extends Component{
 
     render(){
         return(<div>
-            <Typography variant='h4'> Datos de la Agencia</Typography>
+            <Typography variant='h4'> Datos del Vehiculo</Typography>
             <FormControl>
                 {this.state.plantilla.map((elem,ind)=>GenerarCampo(elem,this.state.valores[elem],(val)=>this.actualizar(val,elem)))}
             </FormControl>
@@ -253,7 +253,7 @@ class Presentacion extends Component{
 
     render(){
         return ( <div style={{textAlign:'center'}}>
-                <Typography variant='h4'> Bienvenido al gestor de Ingreso de Agencias</Typography><br/>
+                <Typography variant='h4'> Bienvenido al gestor de Ingreso de Vehiculos</Typography><br/>
                 <Typography variant='body1' > A continuación se le pedira que indique el tipo de agencia que desea agregar</Typography><br/>
                 <Select onChange={(ev)=>{this.actualizar(ev);this.setState({tipo:ev.target.value})}} value={this.state.tipo} style={{width:'200px'}}>
                     {['Auto','Camioneta','Colectivo'].map((elem,ind)=><MenuItem value={elem} key={ind}>{elem}</MenuItem>)}

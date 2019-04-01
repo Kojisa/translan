@@ -1,5 +1,10 @@
 import React,{Component} from 'react';
-import {Grid,Typography,Paper} from '@material-ui/core';
+import {Grid,Typography,Paper,IconButton} from '@material-ui/core';
+import IconoBorrar from '@material-ui/icons/Delete';
+import IconoEditar from '@material-ui/icons/Edit';
+import AgregarVehiculo from '../Asignaciones/AsignarVehiculo'
+import AsignarAgencia from '../Asignaciones/AsignarVehiculo';
+
 
 
 
@@ -48,18 +53,43 @@ class VistaVehiculosRelacionados extends Component{
         super(props);
         this.state = {
             datos:props.datos,
+            editar:false,
         }
     }
 
     render(){
         let datos = this.state.datos;
+        let editar = null;
+        
+        editar=<IconButton
+            onClick={()=>this.setState({editar:!this.state.editar})}>
+            <IconoEditar />
+        </IconButton>
+        let agregarVehiculo = null;
+        if(this.state.editar === true){
+            agregarVehiculo = <AsignarAgencia fuente='body2' botonAgregar={true}></AsignarAgencia>
+        }
         return(<Paper>
-            <Typography variant='h4'><b>Vehiculos Vinculados</b></Typography><br/>
+            <Typography variant='h4' style={{paddingRight:'10px',display:'inline-block'}}><b>Vehiculos Vinculados</b></Typography>
+            {editar}
+            <br/>
 
-            {datos.map((elem,ind)=> <Paper>
+            {datos.map((elem,ind)=> {
+            let boton = null;
+            if(this.state.editar === true){
+                boton =  <IconButton
+                >
+                <IconoBorrar />
+            </IconButton>
+            }
+            return <Paper>
+                {boton}
                 {Object.keys(elem).map((act,algo)=> <Typography variant='body1'><b>{act}:</b>{elem[act]}</Typography>)}
             </Paper>
-           )}
+            })}
+
+            {agregarVehiculo}
+
         </Paper>)
     }
 }

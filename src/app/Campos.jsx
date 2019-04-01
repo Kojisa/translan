@@ -25,12 +25,12 @@ export function GenerarCampo(tipo,variable,actualizador){
 
     else if(TIPOFECHA.indexOf(tipo) > -1){
         return <TextField value={variable} onChange={actualizador === null ? null: (ev)=>actualizador(ev.target.value)}
-        label={tipo} type='date' />
+        label={tipo}  type='date' />
     }  
 
     else if(TIPOSLIDER.indexOf(tipo) > -1){
         return <FormControl>
-                    <InputLabel htmlFor={'select'+tipo}>{tipo}</InputLabel>
+                    <InputLabel htmlFor={'select'+tipo} shrink>{tipo}</InputLabel>
                     <NativeSelect value={variable} onChange={actualizador === null ? null: (ev)=>actualizador(ev.target.value)} 
                     id={'select'+tipo} >{cargarItems(tipo)}</NativeSelect>
                 </FormControl>

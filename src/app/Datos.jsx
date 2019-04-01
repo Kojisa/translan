@@ -1,11 +1,11 @@
-let Agencias=[{'Razon':'Remis Nico','Tipo':'Remiseria','CUIT':'33-1391029-9'},
+export let Agencias=[{'Razon':'Remis Nico','Tipo':'Remiseria','CUIT':'33-1391029-9'},
 {'Razon':'S.A. Bondi','Tipo':'Escolar','CUIT':'20-1834912-2'},
 {'Razon':'Remis Efren','Tipo':'Remiseria','CUIT':'20-1923411-8'},
 {'Razon':'Remises Sole','Tipo':'Remiseria'},
 {'Razon':'Escuelita Express','Tipo':'Escolar'},
 {'Razon':'TranBus','Tipo':'Escolar'}];
 
-let AgenciasCompletas=[
+export let AgenciasCompletas=[
 {'Agente':{'Razon':'Remiseria Nico','CUIT':'33-1391029-9','Tipo':'Remiseria','Dirección':'2 de Mayo 2793',
 'Telefono':'011 4247-5783','Localidad':'Lanus'},'Responsable':{'Nombre':'Nicolas','Apellido':'Ferreira','DNI':'23930132',
 'CUIT':'20-23930123','Nombre de Fantasia':'Nicolas Ferreira','Fecha de Nacimiento':'20/03/1970','Dirección':'2 de Mayo 2793'},

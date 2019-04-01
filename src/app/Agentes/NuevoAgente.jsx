@@ -21,7 +21,8 @@ export default class Principal extends Component{
             tipo:null,
             etapa:0,
             confirmando:false,
-            pasos:['Confirmar Tipo de Agente','Documentación Requerida','Carga de Datos del Agente','Datos del Representante','Finalizado'],
+            pasos:['Confirmar Tipo de Agente','Documentación Requerida',
+            'Carga de Datos del Agente','Datos del Representante','Finalizado'],
             contStep:null,
             papelesPrevios:false,//estado de los papeles necesarios.
         }
@@ -102,7 +103,7 @@ export default class Principal extends Component{
                             contStep: <div>
                                 <Typography variant='h4'>Datos del Responsable</Typography>
                                 <IngresoPersona actualizar={this.actualizarResponsable.bind(this)} 
-                            valores = {this.state.valoresResponsable}
+                            valores = {this.state.valoresResponsable} dialogo={false}
                             ></IngresoPersona>
                             </div>
                 

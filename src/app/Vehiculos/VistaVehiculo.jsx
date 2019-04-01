@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
-import {Grid,Typography,Paper} from '@material-ui/core';
-
+import {Grid,Typography,Paper,Button,IconButton} from '@material-ui/core';
+import IconoEditar from '@material-ui/icons/Edit';
+import AsignarAgencia from '../Asignaciones/AsignarAgencia';
+import IconoBorrar from '@material-ui/icons/Delete';
 
 export default class Contenedor extends Component{
     constructor(props){
@@ -50,6 +52,7 @@ class Agencias extends Component{
         super(props);
         this.state = {
             datos:props.datos,
+            editar:false,
         }
     }
     componentWillReceiveProps(props){
@@ -58,10 +61,21 @@ class Agencias extends Component{
 
     render(){
         let claves = Object.keys(this.state.datos);
+        let agregar = null;
+        let borrar = null;
+        if(this.state.editar === true){
+            agregar = <AsignarAgencia fuente='body2' botonAgregar={true}></AsignarAgencia>
+            borrar = <IconButton><IconoBorrar/></IconButton>
+        }
+        
         return(<Paper>
-            <Typography variant='h4'><b>Agencia</b></Typography><br/>
-
+            <Typography variant='h4' style={{display:'inline-block'}}><b>Agencias</b></Typography> 
+            <IconButton onClick={()=>this.setState({editar:!this.state.editar})}><IconoEditar/></IconButton> <br/>
+            {borrar}
             {claves.map((elem,ind)=><Typography variant='body1'><b>{elem}:</b>{this.state.datos[elem]}</Typography>)}
+            
+            {agregar}
+        
         </Paper>
 
         )

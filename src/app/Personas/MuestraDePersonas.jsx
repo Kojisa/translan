@@ -30,7 +30,7 @@ export default class Contenedor extends Component{
     render(){
         let popup = null;
         if(this.state.agregando){
-            popup=<NuevaPersona salir={()=>this.setState({agregando:false})} ></NuevaPersona>
+            popup=<NuevaPersona salir={()=>this.setState({agregando:false})} dialogo={true}></NuevaPersona>
         }
 
         return(
