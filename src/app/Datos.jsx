@@ -8,7 +8,7 @@ export let Agencias=[{'Razon':'Remis Nico','Tipo':'Remiseria','CUIT':'33-1391029
 export let AgenciasCompletas=[
 {'Agente':{'Razon':'Remiseria Nico','CUIT':'33-1391029-9','Tipo':'Remiseria','Dirección':'2 de Mayo 2793',
 'Telefono':'011 4247-5783','Localidad':'Lanus'},'Responsable':{'Nombre':'Nicolas','Apellido':'Ferreira','DNI':'23930132',
-'CUIT':'20-23930123','Nombre de Fantasia':'Nicolas Ferreira','Fecha de Nacimiento':'20/03/1970','Dirección':'2 de Mayo 2793'},
+'CUIT':'20-23930132-6','Nombre de Fantasia':'Nicolas Ferreira','Fecha de Nacimiento':'20/03/1970','Dirección':'2 de Mayo 2793'},
 'Vehiculos':[{'Patente':'AVJ123','Marca':'Chevrolette','Modelo':'Corsa','Ultimo Registro':'02/12/2018 - Gdor M Paz 700 - Lanus'},
 {'Patente':'NDJ542','Marca':'Fiat','Modelo':'Duna','Ultimo Registro':'05/11/2018 -  Av. Pres. Hipólito Yrigoyen 3894 - Lanus'},
 {'Patente':'CKS894','Marca':'Renault','Modelo':'Clio','Ultimo Registro':'01/01/2019 -   Cnel. Beltrán 42 - Remedios de Escalada'}]},

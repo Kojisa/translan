@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import {Grid,Typography,Paper,IconButton,Dialog} from '@material-ui/core';
 import IconoBorrar from '@material-ui/icons/Delete';
 import IconoEditar from '@material-ui/icons/Edit';
-import AgregarVehiculo from '../Asignaciones/AsignarVehiculo'
 import AsignarAgencia from '../Asignaciones/AsignarVehiculo';
 import IngresoPersona from '../Personas/IngresoPersona';
 
@@ -17,7 +16,7 @@ export default class Contenedor extends Component{
             datos:{'Agente':{'Razon':'Remiseria Nico','CUIT':'33-1391029-9',
             'Dirección':' 2 de Mayo 2793','Telefono':'011 4247-5783','Localidad':'Lanus'},
             'Responsable':{'Nombre':'Nicolas','Apellido':'Ferreira','DNI':'23930132',
-            'CUIT':'20-23930123','Nombre de Fantasia':'Nicolas Ferreira','Fecha de Nacimiento':'20/03/1970',
+            'CUIT':'20-23930132-6','Nombre de Fantasia':'Nicolas Ferreira','Fecha de Nacimiento':'20/03/1970',
             'Dirección':'2 de Mayo 2793'},
             'Vehiculos':[{'Patente':'AVJ123','Marca':'Chevrolette','Modelo':'Corsa','Ultimo Registro':'02/12/2018 - Gdor M Paz 700 - Lanus'},
             {'Patente':'NDJ542','Marca':'Fiat','Modelo':'Duna','Ultimo Registro':'05/11/2018 -  Av. Pres. Hipólito Yrigoyen 3894 - Lanus'},
