@@ -3,6 +3,10 @@ import {Grid,Typography,Paper,Button,IconButton} from '@material-ui/core';
 import IconoEditar from '@material-ui/icons/Edit';
 import AsignarAgencia from '../Asignaciones/AsignarAgencia';
 import IconoBorrar from '@material-ui/icons/Delete';
+import IngresarPersona from '../Personas/IngresoPersona';
+import IngresoPersona from '../Personas/IngresoPersona';
+import IconoAgregar from '@material-ui/icons/Add';
+
 
 export default class Contenedor extends Component{
     constructor(props){
@@ -20,7 +24,7 @@ export default class Contenedor extends Component{
     }
 
     render(){
-        return(<div style={{width:'500px'}}>
+        return(<div style={{width:'500px',height:'80vh',overflowY:'auto'}}>
             <Grid>
                 <Grid>
                     <Paper>
@@ -87,6 +91,8 @@ class Conductores extends Component{
         super(props);
         this.state = {
             datos:props.datos,
+            editar:false,
+            agregar:false,
         }
     }
 
@@ -94,13 +100,44 @@ class Conductores extends Component{
         this.setState({datos:props.datos});
     }
 
+    corroborarDNI(valor,campo){
+        return valor
+    }
+
     render(){
         let datos = this.state.datos;
-        return(<Paper>
-            <Typography variant='h4'><b>Conductores</b></Typography><br/>
+        let editarPersona = null;
+        if(this.state.agregar === true){
+            editarPersona=<IngresoPersona  
+                salir={()=>this.setState({agregar:false})}
+                valores={this.setState.datos}
+                actualizar = {this.corroborarDNI.bind(this)}
+                dialogo={true}
+            ></IngresoPersona>
+        }
+        let botonAgregar = null;
+        let botonEliminar = null;
+        if(this.state.editar === true){
+            botonAgregar = <Paper>
+                <Typography variant='body2' style={{display:'inline-block',paddingRight:'15px'}}>Agregar Conductor</Typography>
+                <IconButton onClick={()=>this.setState({agregar:true})}> <IconoAgregar/></IconButton>
+            </Paper>
 
+            botonEliminar = <IconButton> <IconoBorrar/> </IconButton>
+        }
+
+
+        return(<Paper>
+            <Typography variant='h4' style={{display:'inline-block',paddingRight:'15px'}}  ><b>Conductores</b></Typography>
+            <IconButton onClick={()=>this.setState({editar:!this.state.editar,agregar:false})} ><IconoEditar/></IconButton>
+            <br/>
+            {editarPersona}
+            {botonEliminar}
             {datos.map((elem,ind)=> <Paper>
             {Object.keys(elem).map((act,algo)=> <Typography variant='body1'><b>{act}:</b>{elem[act]}</Typography>)}
+            {botonAgregar}
+        
+        
         </Paper>)}
         </Paper>)
     }

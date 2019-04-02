@@ -23,7 +23,7 @@ export default class IngresoPersona extends Component{
             pasos:['Pedir Datos de la Persona'],
             plantilla:ObtenerPlantilla('Persona'),
         }
-        this.actualizar = props.actualizar
+        this.actualizar = props.actualizar;
         this.salir = props.salir;
     }
 

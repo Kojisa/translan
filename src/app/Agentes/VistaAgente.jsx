@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
-import {Grid,Typography,Paper,IconButton} from '@material-ui/core';
+import {Grid,Typography,Paper,IconButton,Dialog} from '@material-ui/core';
 import IconoBorrar from '@material-ui/icons/Delete';
 import IconoEditar from '@material-ui/icons/Edit';
 import AgregarVehiculo from '../Asignaciones/AsignarVehiculo'
 import AsignarAgencia from '../Asignaciones/AsignarVehiculo';
+import IngresoPersona from '../Personas/IngresoPersona';
 
 
 
@@ -26,7 +27,7 @@ export default class Contenedor extends Component{
     }
 
     render(){
-        return <div style={{width:'500px'}}>
+        return <div style={{width:'505px',height:'80vh',overflowY:'auto'}}>
             <Grid>
                 <Grid>
                     <Paper>
@@ -100,6 +101,7 @@ class VistaResponsable extends Component{
         super(props);
         this.state = {
             datos:props.datos,
+            edicion:false,
         }
     }
 
@@ -107,11 +109,35 @@ class VistaResponsable extends Component{
         this.setState({datos:props.datos})
     }
 
-    render(){
-        let claves = Object.keys(this.state.datos);
-        return(<Paper>
-            <Typography variant='h4'><b>Responsable</b></Typography><br/>
+    cerrarEdicion(){
+        this.setState({edicion:false})
+    }
 
+    corroborarDNI(valor,campo){
+        return valor
+    }
+
+    render(){
+
+        let claves = Object.keys(this.state.datos);
+
+        let edi = null;
+
+        if(this.state.edicion === true){
+            edi = <IngresoPersona valores={this.state.datos} 
+            salir ={this.cerrarEdicion.bind(this)}
+            actualizar = {this.corroborarDNI.bind(this)}
+            dialogo={true}
+
+            ></IngresoPersona>
+        }
+
+
+        return(<Paper>
+            <Typography variant='h4' style={{paddingRight:'10px',display:'inline-block'}}><b>Responsable</b></Typography>
+            <IconButton onClick={()=>{this.setState({edicion:true})}} ><IconoEditar/></IconButton>
+            <br/>
+            {edi}
             {claves.map((elem,ind)=><Typography variant='body1'><b>{elem}:</b>{this.state.datos[elem]}</Typography>)}
         </Paper>)
     }

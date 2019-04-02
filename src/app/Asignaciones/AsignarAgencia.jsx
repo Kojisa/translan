@@ -27,7 +27,7 @@ export default class AsignarAgencia extends Component{
         }
         return(
             <div>
-                <Typography variant={tamFont} > Asigne una agencia al vehiculo recien ingresado </Typography>
+                <Typography variant={tamFont} > Asigne una agencia al vehiculo</Typography>
                 <FormControl style={{paddingRight:'10px'}}>
                     <InputLabel htmlFor='asignado' shrink >Agencias</InputLabel>
                     <Select value={this.state.elegido} id='asignado'
