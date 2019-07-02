@@ -25,7 +25,7 @@ export function GenerarCampo(tipo,variable,actualizador){
 
     else if(TIPOFECHA.indexOf(tipo) > -1){
         return <TextField value={variable} onChange={actualizador === null ? null: (ev)=>actualizador(ev.target.value)}
-        label={tipo}  type='date' />
+        label={tipo}  type='date' InputLabelProps={{shrink:true}} />
     }  
 
     else if(TIPOSLIDER.indexOf(tipo) > -1){

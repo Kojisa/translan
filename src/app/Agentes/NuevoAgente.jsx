@@ -42,6 +42,8 @@ export default class Principal extends Component{
     actualizarResponsable(val,campo){
         let resp = this.state.valoresResponsable;
         resp[campo] = val;
+        console.log(val)
+        console.log(campo)
         this.setState({valoresResponsable:resp});
     }
 
@@ -136,7 +138,9 @@ export default class Principal extends Component{
         > {this.state.confirmando ?  icono : "Siguiente" } </Button>
         
         if( this.state.etapa === this.state.pasos.length - 1){
-            boton = <Button variant='contained' color='primary' onClick={this.salir} >Finalizar</Button>
+            boton = <Button variant='contained' color='primary' onClick={()=>{
+                console.log(this.state);
+                this.salir()}} >Finalizar</Button>
         }
 
 

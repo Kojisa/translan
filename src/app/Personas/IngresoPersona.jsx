@@ -36,7 +36,7 @@ export default class IngresoPersona extends Component{
     actualizarVal(val,campo){
         let datos = this.state.datos;
         datos[campo] = val
-        this.setState({datos:datos})
+        this.actualizar(val,campo)
     }
 
     render(){
@@ -44,7 +44,7 @@ export default class IngresoPersona extends Component{
         let amb = <Grid container spacing={20} style={{paddingBottom:'10px'}}>
                 <FormControl>
                 <Grid item xs direction='column'>
-                    {this.state.plantilla.map((elem,ind)=>GenerarCampo(elem,this.state.datos[elem],this.actualizarVal.bind(this)))}
+                    {this.state.plantilla.map((elem,ind)=>GenerarCampo(elem,this.state.datos[elem],(val)=>this.actualizarVal.bind(this)(val,elem)))}
                 </Grid>
                 <Grid container xs justify={"flex-end"} alignItems={"center"} spacing={10}>
                     <Grid item xs>
