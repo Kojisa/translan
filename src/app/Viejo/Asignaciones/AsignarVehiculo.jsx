@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Grid,Select,Typography,FormControl,MenuItem,InputLabel,Button} from '@material-ui/core';
-import {Agencias} from '../Datos';
+import {Agencias} from '../../Datos';
 
 
 

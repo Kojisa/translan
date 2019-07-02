@@ -3,10 +3,11 @@ import {Button,Typography,Paper,Stepper,
     StepLabel,Step,Select,MenuItem,Dialog,
     FormControl,FormControlLabel,Checkbox} from '@material-ui/core';
 import FingerIcon from '@material-ui/icons/Fingerprint';
-import {GenerarCampo} from '../Campos';
-import {ObtenerPlantilla} from '../Plantillas';
+import {GenerarCampo} from '../../Campos';
+import {ObtenerPlantilla} from '../../Plantillas';
 import IngresoPersona from '../Personas/IngresoPersona';
-import PantallaFinal from '../PantallaFinalIngreso';
+import PantallaFinal from '../../PantallaFinalIngreso';
+import AsignarAgencia from '../Asignaciones/AsignarAgencia';
 
 
 
@@ -21,28 +22,28 @@ export default class Principal extends Component{
             tipo:null,
             etapa:0,
             confirmando:false,
-            pasos:['Confirmar Tipo de Agente','Documentación Requerida',
-            'Carga de Datos del Agente','Datos del Representante','Finalizado'],
+            pasos:['Confirmar Tipo Vehiculo','Documentación Requerida','Carga de Datos del Vehiculo'
+            ,'Datos del Propietario','Asignar Agencia','Finalizado'],
             contStep:null,
             papelesPrevios:false,//estado de los papeles necesarios.
         }
-        this.salir = props.salir
         this.funGuardar = props.funGuardar;
         this.funHabilitar = props.habilitar;
         this.actualizarValor = props.actualizarValor;
+        this.salir = props.salir;
     }
 
 
     actualiarTipo(ev){
         let tipo = ev.target.value;
-        let plantilla = ObtenerPlantilla(tipo)
-        this.setState({tipo:tipo,plantilla:plantilla})
+        let plantilla = ObtenerPlantilla('Vehiculo')
+        this.setState({tipo:tipo,plantilla:plantilla,confirmando:false})
     }
 
     actualizarResponsable(val,campo){
         let resp = this.state.valoresResponsable;
         resp[campo] = val;
-        this.setState({valoresResponsable:resp});
+        this.setState({valoresResponsable:resp,confirmando:false});
     }
 
     papelesNecesarios(bool){
@@ -50,7 +51,8 @@ export default class Principal extends Component{
     }
 
     componentDidMount(props){
-        this.setState({contStep:<Presentacion actualizar={this.actualiarTipo.bind(this)} tipo={this.state.tipo} />})
+        this.setState({contStep:<Presentacion 
+            actualizar={this.actualiarTipo.bind(this)} tipo={this.state.tipo} />})
     }
 
     componentWillReceiveProps(props){
@@ -71,11 +73,9 @@ export default class Principal extends Component{
     }
 
     actualizarDatosAgencia(val,campo){
-        console.log(val)
-        console.log(campo)
         let agencia = this.state.valoresAgencia;
         agencia[campo] = val;
-        this.setState({valoresAgencia:agencia})
+        this.setState({valoresAgencia:agencia,confirmando:false})
     }
 
     handlearBotonStep(){
@@ -101,15 +101,20 @@ export default class Principal extends Component{
             this.setState({confirmando:false,
                             etapa:etapa+1,
                             contStep: <div>
-                                <Typography variant='h4'>Datos del Responsable</Typography>
-                                <IngresoPersona actualizar={this.actualizarResponsable.bind(this)} 
-                            valores = {this.state.valoresResponsable} dialogo={false}
-                            ></IngresoPersona>
-                            </div>
+                                    <Typography variant='h4'>Datos de la Persona</Typography><br/>
+                                    <IngresoPersona actualizar={this.actualizarResponsable.bind(this)} 
+                                valores = {this.state.valoresResponsable} dialogo={false}
+                                ></IngresoPersona>
+                                </div>
                 
             })
         }
         if(etapa === 3){
+            this.setState({confirmando:false,
+                            etapa:etapa + 1,
+                            contStep: <AsignarAgencia></AsignarAgencia>})
+        }
+        if(etapa === 4){
             this.setState({confirmando:false,
                             etapa:etapa+1,
                             contStep: <PantallaFinal variable={this.state.tipo}></PantallaFinal>
@@ -128,7 +133,7 @@ export default class Principal extends Component{
     }
 
     render(){
-        let icono = <div> Confirmar <FingerIcon style={{fontSize:'20px',position:"relative",top:'5px'}}/></div>
+        let icono = <div> Confirmar <FingerIcon/></div>
         let habilitado = this.botonGuardarHabilitado.bind(this)();
         
         let boton = <Button variant="contained" color={this.state.confirmando ? 'secondary':'primary' }
@@ -138,14 +143,10 @@ export default class Principal extends Component{
         if( this.state.etapa === this.state.pasos.length - 1){
             boton = <Button variant='contained' color='primary' onClick={this.salir} >Finalizar</Button>
         }
-
-
         return( 
             <div >
-                <Dialog
-                    onEscapeKeyDown={this.salir}
-                    onBackdropClick={this.salir}
-                    style={{height:'90vh',width:'90vw',display:'block',textAlign:'center'}}
+                <Dialog onEscapeKeyDown={this.salir} onBackdropClick={this.salir}
+                style={{height:'90%',width:'90%',textAlign:'center'}} maxWidth='md'
                     open={this.state.estadoMostrar}
                 >
                     <div>
@@ -183,7 +184,7 @@ class AMB extends Component{
 
     render(){
         return(<div>
-            <Typography variant='h4'> Datos de la Agencia</Typography>
+            <Typography variant='h4'> Datos del Vehiculo</Typography>
             <FormControl>
                 {this.state.plantilla.map((elem,ind)=>GenerarCampo(elem,this.state.valores[elem],(val)=>this.actualizar(val,elem)))}
             </FormControl>
@@ -252,10 +253,10 @@ class Presentacion extends Component{
 
     render(){
         return ( <div style={{textAlign:'center'}}>
-                <Typography variant='h4'> Bienvenido al gestor de Ingreso de Agencias</Typography><br/>
+                <Typography variant='h4'> Bienvenido al gestor de Ingreso de Vehiculos</Typography><br/>
                 <Typography variant='body1' > A continuación se le pedira que indique el tipo de agencia que desea agregar</Typography><br/>
                 <Select onChange={(ev)=>{this.actualizar(ev);this.setState({tipo:ev.target.value})}} value={this.state.tipo} style={{width:'200px'}}>
-                    {['Escolar','Remiseria'].map((elem,ind)=><MenuItem value={elem} key={ind}>{elem}</MenuItem>)}
+                    {['Auto','Camioneta','Colectivo'].map((elem,ind)=><MenuItem value={elem} key={ind}>{elem}</MenuItem>)}
                 </Select>
                 <br/>
                 
