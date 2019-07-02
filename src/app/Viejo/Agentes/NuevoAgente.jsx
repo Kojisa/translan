@@ -3,10 +3,10 @@ import {Button,Typography,Paper,Stepper,
     StepLabel,Step,Select,MenuItem,Dialog,
     FormControl,FormControlLabel,Checkbox} from '@material-ui/core';
 import FingerIcon from '@material-ui/icons/Fingerprint';
-import {GenerarCampo} from '../Campos';
-import {ObtenerPlantilla} from '../Plantillas';
+import {GenerarCampo} from '../../Campos';
+import {ObtenerPlantilla} from '../../Plantillas';
 import IngresoPersona from '../Personas/IngresoPersona';
-import PantallaFinal from '../PantallaFinalIngreso';
+import PantallaFinal from '../../PantallaFinalIngreso';
 
 
 

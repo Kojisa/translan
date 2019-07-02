@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
 import {Avatar,Grid,Paper,Typography,Dialog,Button,
 FormControl} from '@material-ui/core';
-import {GenerarCampo} from '../Campos';
-import {ObtenerPlantilla} from '../Plantillas';
+import {GenerarCampo} from '../../Campos';
+import {ObtenerPlantilla} from '../../Plantillas';
 import IconAvatar from '@material-ui/icons/AccountCircle'
 import FingerIcon from '@material-ui/icons/Fingerprint';
 
