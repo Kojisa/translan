@@ -28,7 +28,7 @@ export default class Domicilios extends Component{
     actualizarValores(item,indice){
         let domicilios = this.state.domicilios;
         domicilios[indice] = item;
-        this.actualizarCampos({domicilios:domicilios});
+        this.actualizarCampos(domicilios);
     }
 
     render(){
