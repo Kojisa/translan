@@ -8,34 +8,59 @@ export default class AMBPersona extends Component{
     constructor(props){
         super(props);
         this.state ={
-            nombre:'',
-            apellido:'',
-            dni:'',
-            tipoDni:'',
+            nombre:props.persona.nombre  === undefined ? '':props.persona.nombre,
+            apellido:props.persona.apellido === undefined ? '':props.persona.apellido,
+            dni:props.persona.dni === undefined ? '':props.persona.dni,
+            tipoDni:props.persona.tipoDni === undefined ? '':props.persona.tipoDni,
             tiposDni:[
 
             ],
-            cuit:'',
-            calle:'',
-            altura:'',
-            dpto:'',
-            localidad:'',
-            rol:'',
+            cuit:props.persona.cuit === undefined ? '':props.persona.cuit,
+            calle:props.persona.calle === undefined ? '':props.persona.calle,
+            altura:props.persona.altura === undefined ? '':props.persona.altura,
+            dpto:props.persona.dpto === undefined ? '':props.persona.dpto,
+            localidad:props.persona.localidad === undefined ? '':props.persona.localidad,
+            rol:props.persona.rol === undefined ? '':props.persona.rol,
             asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
-            roles:[
-                <MenuItem value='Presidente'>Presidente</MenuItem>,
-                <MenuItem value='Socio Gerente'>Socio Gerente</MenuItem>,
-                <MenuItem value='Socio'>Socio</MenuItem>,
-                <MenuItem value='Apoderado'>Apoderado</MenuItem>,
-                <MenuItem value='Director'>Director</MenuItem>,
-            ],
+            roles:props.roles === undefined ? '':props.persona.roles,
         }
         this.guardarInfo = props.funcionGuardar;
 
     }
+
+    devolverDatos(){
+        let datos = {
+            nombre:this.persona.nombre,
+            apellido:this.persona.apellido,
+            dni:this.persona.dni,
+            tipoDni:this.persona.tipoDni,
+            cuit:this.persona.cuit,
+            calle:this.persona.calle,
+            altura:this.persona.altura,
+            dpto:this.persona.dpto,
+            localidad:this.persona.localidad,
+            rol:this.persona.rol,
+        }
+
+        return datos;
+    }
     componentWillReceiveProps(props){
+        if(props.persona === undefined){
+            return;
+        }
         this.setState({
+            nombre:props.persona.nombre,
+            apellido:props.persona.apellido,
+            dni:props.persona.dni,
+            tipoDni:props.persona.tipoDni,
+            cuit:props.persona.cuit,
+            calle:props.persona.calle,
+            altura:props.persona.altura,
+            dpto:props.persona.dpto,
+            localidad:props.persona.localidad,
+            rol:props.persona.rol,
             asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
+            roles:props.roles,
         })
     }
 
@@ -74,7 +99,7 @@ export default class AMBPersona extends Component{
                 value={this.state.localidad}
                 onChange={(ev)=>this.setState({localidad:ev.target.value})}
             ></TextField>
-            <FormControl> 
+            {this.state.asginaRoles === true?<FormControl> 
                 <label htmlFor="rol">Rol</label>
                 <Select inputProps={{id:'rol'}}
                     value={this.state.rol}
@@ -82,7 +107,7 @@ export default class AMBPersona extends Component{
                 >   
                     {this.state.roles}
                 </Select>
-            </FormControl>
+            </FormControl> : this.state.rol.length > 0? <Typography>{this.state.rol}</Typography> : null}
         </div>)
     }
 
