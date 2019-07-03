@@ -21,14 +21,22 @@ export default class AMBPersona extends Component{
             dpto:'',
             localidad:'',
             rol:'',
+            asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
             roles:[
                 <MenuItem value='Presidente'>Presidente</MenuItem>,
                 <MenuItem value='Socio Gerente'>Socio Gerente</MenuItem>,
-                <MenuItem value='Apoderado'>Apoderado</MenuItem>
+                <MenuItem value='Socio'>Socio</MenuItem>,
+                <MenuItem value='Apoderado'>Apoderado</MenuItem>,
+                <MenuItem value='Director'>Director</MenuItem>,
             ],
         }
         this.guardarInfo = props.funcionGuardar;
 
+    }
+    componentWillReceiveProps(props){
+        this.setState({
+            asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
+        })
     }
 
     render(){
