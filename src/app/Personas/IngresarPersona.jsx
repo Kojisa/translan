@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {TextField,Select,MenuItem,InputLabel,Typography,
-    FormControl,FormControlLabel} from '@material-ui/core';
+    FormControl,FormControlLabel,Button} from '@material-ui/core';
 
 
 
@@ -22,7 +22,7 @@ export default class AMBPersona extends Component{
             localidad:props.persona.localidad === undefined ? '':props.persona.localidad,
             rol:props.persona.rol === undefined ? '':props.persona.rol,
             asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
-            roles:props.roles === undefined ? '':props.persona.roles,
+            roles:props.roles === undefined ? '':props.roles,
         }
         this.guardarInfo = props.funcionGuardar;
 
@@ -30,38 +30,77 @@ export default class AMBPersona extends Component{
 
     devolverDatos(){
         let datos = {
-            nombre:this.persona.nombre,
-            apellido:this.persona.apellido,
-            dni:this.persona.dni,
-            tipoDni:this.persona.tipoDni,
-            cuit:this.persona.cuit,
-            calle:this.persona.calle,
-            altura:this.persona.altura,
-            dpto:this.persona.dpto,
-            localidad:this.persona.localidad,
-            rol:this.persona.rol,
+            nombre:this.state.nombre,
+            apellido:this.state.apellido,
+            dni:this.state.dni,
+            tipoDni:this.state.tipoDni,
+            cuit:this.state.cuit,
+            calle:this.state.calle,
+            altura:this.state.altura,
+            dpto:this.state.dpto,
+            localidad:this.state.localidad,
+            rol:this.state.rol,
         }
 
         return datos;
     }
+
+    guardarDatos(){
+        let estado = this.devolverDatos.bind(this)();
+        this.setState({
+            nombre:'',
+            apellido:'',
+            dni:'',
+            tipoDni:'',
+            cuit:'',
+            calle:'',
+            altura:'',
+            dpto:'',
+            localidad:'',
+            rol:'',
+        },this.guardarInfo(estado))
+
+    }
+    
+
+
+    resetear(){
+        this.setState({
+            nombre:'',
+            apellido:'',
+            dni:'',
+            tipoDni:'',
+            cuit:'',
+            calle:'',
+            altura:'',
+            dpto:'',
+            localidad:'',
+            rol:'',
+        })
+    }
     componentWillReceiveProps(props){
         if(props.persona === undefined){
-            return;
+            this.setState({
+                asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
+                roles:props.roles === undefined ? '':props.persona.roles,
+            })
         }
-        this.setState({
-            nombre:props.persona.nombre,
-            apellido:props.persona.apellido,
-            dni:props.persona.dni,
-            tipoDni:props.persona.tipoDni,
-            cuit:props.persona.cuit,
-            calle:props.persona.calle,
-            altura:props.persona.altura,
-            dpto:props.persona.dpto,
-            localidad:props.persona.localidad,
-            rol:props.persona.rol,
-            asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
-            roles:props.roles,
-        })
+        else{
+            this.setState({
+                nombre:props.persona.nombre  === undefined ? '':props.persona.nombre,
+                apellido:props.persona.apellido === undefined ? '':props.persona.apellido,
+                dni:props.persona.dni === undefined ? '':props.persona.dni,
+                tipoDni:props.persona.tipoDni === undefined ? '':props.persona.tipoDni,
+                cuit:props.persona.cuit === undefined ? '':props.persona.cuit,
+                calle:props.persona.calle === undefined ? '':props.persona.calle,
+                altura:props.persona.altura === undefined ? '':props.persona.altura,
+                dpto:props.persona.dpto === undefined ? '':props.persona.dpto,
+                localidad:props.persona.localidad === undefined ? '':props.persona.localidad,
+                rol:props.persona.rol === undefined ? '':props.persona.rol,
+                asginaRoles:props.asignaRoles === undefined? false:props.asignaRoles,
+                roles:props.roles === undefined ? '':props.roles,
+            })
+        }
     }
 
     render(){
@@ -108,6 +147,9 @@ export default class AMBPersona extends Component{
                     {this.state.roles}
                 </Select>
             </FormControl> : this.state.rol.length > 0? <Typography>{this.state.rol}</Typography> : null}
+            {this.guardarInfo !== undefined && this.guardarInfo !== null ? 
+            <Button onClick={this.guardarDatos.bind(this)}>Guardar</Button>:null }
+        
         </div>)
     }
 

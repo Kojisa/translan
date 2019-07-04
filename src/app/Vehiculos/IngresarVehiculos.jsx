@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {TextField,Select,MenuItem,InputLabel,Typography,
+import {TextField,Select,MenuItem,InputLabel,Typography,Button,
     FormControl,FormControlLabel,Switch} from '@material-ui/core';
 
 
@@ -8,6 +8,50 @@ export default class AMBVehiculos extends Component{
     constructor(props){
         super(props);
         this.state={
+            dominio:props.vehiculo.dominio === undefined? '':props.vehiculo.dominio,
+            modelo:props.vehiculo.modelo === undefined? '':props.vehiculo.modelo,
+            anio:props.vehiculo.anio === undefined? '':props.vehiculo.anio,
+            marca:props.vehiculo.marca === undefined? '':props.vehiculo.marca,
+            nombreTitular:props.vehiculo.nombreTitular === undefined? '':props.vehiculo.nombreTitular,
+            cuitTitular:props.vehiculo.cuitTitular === undefined? '':props.vehiculo.cuitTitular,
+            habilitado:props.vehiculo.habilitado === undefined? '':props.vehiculo.habilitado,
+            inspector:props.vehiculo.inspector === undefined? '':props.vehiculo.inspector,
+
+        }
+        this.guardarInfo = props.funcionGuardar;
+    }
+
+    componentWillReceiveProps(props){
+        this.setState({
+            dominio:props.vehiculo.dominio === undefined? '':props.vehiculo.dominio,
+            modelo:props.vehiculo.modelo === undefined? '':props.vehiculo.modelo,
+            anio:props.vehiculo.anio === undefined? '':props.vehiculo.anio,
+            marca:props.vehiculo.marca === undefined? '':props.vehiculo.marca,
+            nombreTitular:props.vehiculo.nombreTitular === undefined? '':props.vehiculo.nombreTitular,
+            cuitTitular:props.vehiculo.cuitTitular === undefined? '':props.vehiculo.cuitTitular,
+            habilitado:props.vehiculo.habilitado === undefined? '':props.vehiculo.habilitado,
+            inspector:props.vehiculo.inspector === undefined? '':props.vehiculo.inspector
+        })
+    }
+
+    devolverDatos(){
+        let estado = {
+            dominio:this.state.dominio,
+            modelo:this.state.modelo,
+            anio:this.state.anio,
+            marca:this.state.marca,
+            nombreTitular:this.state.nombreTitular,
+            cuitTitular:this.state.cuitTitular,
+            habilitado:this.state.habilitado,
+            inspector:this.state.inspector
+        }
+        return estado;
+    }
+
+    guardarDatos(){
+        let estado = this.devolverDatos.bind(this)();
+
+        this.setState({
             dominio:'',
             modelo:'',
             anio:'',
@@ -15,9 +59,8 @@ export default class AMBVehiculos extends Component{
             nombreTitular:'',
             cuitTitular:'',
             habilitado:'',
-            inspector:'',
-
-        }
+            inspector:''
+        },this.guardarInfo(estado));
     }
 
     render(){
@@ -61,7 +104,8 @@ export default class AMBVehiculos extends Component{
                 <TextField value={this.state.inspector} label='Inspector Habilitante'
                     onChange={(ev)=>this.setState({inspector:ev.target.value})}    
                 ></TextField>:null}
-            
+            {this.guardarInfo !== undefined && this.guardarInfo !== null ? 
+            <Button onClick={this.guardarDatos.bind(this)}>Guardar</Button>:null }
         </div>)
     }
 }

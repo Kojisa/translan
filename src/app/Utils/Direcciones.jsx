@@ -5,6 +5,7 @@ import {TextField,FormControl,InputLabel,Select,Typography} from '@material-ui/c
 export default class Domicilios extends Component{
     constructor(props){
         super(props);
+        console.log(props.domicilios)
         this.state={
             domicilios:props.domicilios,
             tipos:props.tipos,
@@ -32,8 +33,9 @@ export default class Domicilios extends Component{
     }
 
     render(){
+        
         return(<div>
-            {this.state.domicilios.maps((elem,ind)=><Domicilio 
+            {this.state.domicilios.map((elem,ind)=><Domicilio 
             domicilio={elem} 
             tipos={this.state.tipos} 
             editarTipo={this.state.puedeEditar}
@@ -102,10 +104,10 @@ class Domicilio extends Component{
             <FormControl>
                 <InputLabel htmlFor='tipo'>Tipo</InputLabel>
                 <Select value={this.state.tipo} inputProps={{id:'tipo'}}
-                onChange={(ev)=>this.actualizarValores.bind(this)(ev.target.value,'tipo')}
+                onChange={(ev)=>this.actualziarValores.bind(this)(ev.target.value,'tipo')}
             >{this.state.tipos}</Select>
             </FormControl>
-            : <Typography >{this.state.tipo}</Typography>  }
+            : <Typography style={{display:'inline-block'}} >Tipo: {this.state.tipo}</Typography>  }
         </div>)
     }
 }

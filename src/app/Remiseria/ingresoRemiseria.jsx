@@ -1,10 +1,16 @@
 import React,{Component} from 'react';
 import {TextField,Checkbox,Button,Fab,
-Select,FormControl,InputLabel, Menu, 
+Select,FormControl,InputLabel, Menu,Table,TableRow,TableCell,TableBody,
 MenuItem, Typography,Dialog,DialogContent,
 DialogTitle,DialogActions} from '@material-ui/core';
 import Direcciones from '../Utils/Direcciones';
 import Add from '@material-ui/icons/Add';
+import IngresarPersona from '../Personas/IngresarPersona';
+import IngresoVehiculos from './Vehiculos';
+import IngresoSocios from './Socios';
+import IngresoVehiculo from '../Vehiculos/IngresarVehiculos';
+import ListadoSelectivo from '../Utils/ListadoSelectivo';
+import IngresoChoferes from './Choferes';
 
 
 
@@ -30,23 +36,13 @@ export default class AMBRemiserias extends Component{
             ],
             tiposUbicaciones:[
                 <MenuItem value='Sucursal'>Sucursal</MenuItem>,
-                <MenuItem value='Domicilio'>Domiciolio</MenuItem>
+                <MenuItem value='Casa Central'>Casa Central</MenuItem>,
+                <MenuItem value='Domicilio'>Domicilio</MenuItem>
             ],
             fechaInicio:'',
             socios:[
-                {
-                    nombre:'',
-                    apellido:'',
-                    dni:'',
-                    tipoDni:'',
-                    cuit:'',
-                    calle:'',
-                    altura:'',
-                    dpto:'',
-                    localidad:'',
-                    rol:'',
-                }
             ],
+            certificadosAntecedentesSocios:[],
             rolesSocios:[
                 <MenuItem value='Presidente'>Presidente</MenuItem>,
                 <MenuItem value='Socio Gerente'>Socio Gerente</MenuItem>,
@@ -64,7 +60,12 @@ export default class AMBRemiserias extends Component{
 
 
     siguiente(){
+        
+        if(this.state.etapa === 4){
+            return;
+        }
         this.setState({etapa:this.state.etapa+1})
+        
     }
 
     anterior(){
@@ -115,74 +116,43 @@ export default class AMBRemiserias extends Component{
             </div>
         }
         if(this.state.etapa === 2){
+            
+            muestra= <IngresoSocios 
+                antecedentes={this.state.certificadosAntecedentesSocios}
+                socios={this.state.socios}
+                roles={this.state.rolesSocios}
+                funAct={this.actualizarValores.bind(this)}
+            ></IngresoSocios>
+        }
+
+        if(this.state.etapa === 3){
+            muestra = <IngresoVehiculos
+                vehiculos={this.state.vehiculos}
+                funAct={this.actualizarValores.bind(this)}
+            />
+        }
+
+        if(this.state.etapa === 4){
+            muestra = <IngresoChoferes
+                choferes={this.state.conductores}
+                socios={this.state.socios}
+                vehiculos={this.state.vehiculos}
+                funAct={this.actualizarValores.bind(this)}
+            ></IngresoChoferes>
         }
 
 
         return(<div>
-
+            {muestra}
+            <Button onClick={this.anterior.bind(this)} color='secondary' disabled={this.state.etapa === 0? true: false}>Anterior</Button>
+            <Button onClick={this.siguiente.bind(this)} color='primary'>{this.state.etapa === 4? 'Finalizar':'Siguiente'}</Button>
         </div>)
     }
 }
 
-class IngresoSocios extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            socios:props.socios,
-            roles:props.roles,
-            popUp:false,
-        }
-        this.actualizarDatos = props.funAct;
-    }
-
-    componentWillReceiveProps(props){
-        this.setState({
-            socios:props.socios,
-            roles:props.roles
-        })
-    }
-
-    cargarPopUp(){
-        this.setState({popUp:true});
-    }
-
-    guardarSocio(datos){
-        let socios = this.state.socios;
-        socios.push(datos);
-        this.actualizarDatos({socios:socios});
-    }
-
-
-    render(){
 
 
 
-        return (<div>
-                    <div>
-                        <Typography>Socios</Typography>
-                        <Fab color='primary' onClick={
-                            this.cargarPopUp.bind(this)
-                        } 
-                            style={{paddingLeft:'40px'}}
-                        > 
-                            <Add/>
-                        </Fab>
-                    </div>
-                    {this.state.socios.map((elem,ind)=><div>
-                        <Typography>{elem.nombre + ' ' + elem.apellido} - Vinculo: {elem.rol}</Typography>
-                    </div>)}
-                    <Dialog
-                        open={this.state.popUp}
-                        guardarSocio={this.guardarSocio.bind(this)}
-                    >
-                        <DialogTitle>Generar Nuevo Socio</DialogTitle>
-                        <DialogContent>
-                            
-                        </DialogContent>
-                    </Dialog>
-                </div>)
-    }
-}
 
 class IngresoInicial extends Component{
     constructor(props){
@@ -194,7 +164,7 @@ class IngresoInicial extends Component{
             cuit:props.cuit,
             fechaInicio:props.fechaInicio,
         }
-        this.actualizarDatos = props.funAct
+        this.actualizarDatos = props.funAct;
     }
 
     actualizarCampos(val,tipo){
