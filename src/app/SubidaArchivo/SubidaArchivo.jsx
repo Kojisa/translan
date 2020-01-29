@@ -41,7 +41,7 @@ export default class Subida extends Component{
     }
 
     recibirSeleccionado(arch){
-        
+        console.log(arch)
         let archivos = this.state.archivos;
         
         if(arch !== undefined && arch !== null){
@@ -58,6 +58,37 @@ export default class Subida extends Component{
         this.setState({
             seleccionando:true
         })
+    }
+
+    enviarArchivos(fun,){
+
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+          if(this.readyState == 4 && this.status == 200){
+              if (fun != null){
+              if (this.responseText.length > 0){
+                  fun(this.responseText);
+              }
+              else{
+                  fun();
+              }
+              }
+          }
+        };
+        request.open('POST',"http://" + this.HOST + "/recibir",true);
+        if ('POST' == "POST"){
+          let form = new FormData();
+          for (let x = 0; x < this.state.archivos.length; x++){
+            form.append('file',this.state.archivos[x],this.state.archivos[0].name)
+          }
+          //request.setRequestHeader('Content-type','multipart/form-data');
+          request.send(form);
+        }
+        else {request.send();}
+      }
+
+    guardarArchivos(){
+        return
     }
 
 
@@ -89,7 +120,7 @@ export default class Subida extends Component{
                 />
                 <Button onClick={this.abrirDialogo.bind(this)} >Seleccionar Archivo</Button>
                 {this.state.archivos.map((elem,ind)=><div>
-                    <Typography>{elem.nombre }</Typography>
+                    <Typography color='black'>{elem.name }</Typography>
                     <Typography>{elem.tipo}</Typography>
                 </div>)//hay que revisar que datos devuelve el input o que datos mantiene.
                 }
@@ -127,6 +158,7 @@ class DialogoArchivo extends Component{
         this.setState({
             input:'',
         })
+        this.devolverElegido(null)
     }
 
     render(){
@@ -137,8 +169,8 @@ class DialogoArchivo extends Component{
             >
                 <div>
                     <Typography>Seleccione el archivo a subir</Typography>
-                    <Input type='file' value={this.state.input}
-                        onChange={(ev)=>console.log(ev)}
+                    <Input type='file'
+                        onChange={(ev)=>this.setState({input:ev.target.files[0]})}
                         margin='dense'
                     ></Input>
                     <Button onClick={this.elegir.bind(this)}>Seleccionar</Button>

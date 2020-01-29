@@ -1,8 +1,14 @@
 from bottle import Bottle, route, run, response, hook, request, static_file
+import bottle
 import os,signal
 import paste
 
 default = Bottle()
+
+bottle.BaseRequest.MEMFILE_MAX = (1024 * 1024) * 3 #maximo 3mb
+
+
+
 
 @default.hook('after_request')
 def enable_cors():
@@ -25,6 +31,13 @@ def dummy():
 #default.mount('/modulo',modulo.modulo)
 
 
+@default.route('/recibir',method='POST')
+def recibirArchivo():
+    
+    datos = request.json['datos']
+    print datos
+    
+    request.files['file'].save('./archivo/',True)
 
 
 @default.route('/<modulo>')
