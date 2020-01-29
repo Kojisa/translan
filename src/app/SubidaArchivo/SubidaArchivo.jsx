@@ -60,7 +60,7 @@ export default class Subida extends Component{
         })
     }
 
-    enviarArchivos(fun,){
+    enviarArchivos(fun){
 
         var request = new XMLHttpRequest();
         request.onreadystatechange = function(){

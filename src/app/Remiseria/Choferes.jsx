@@ -12,7 +12,7 @@ export default class IngresoChoferes extends Component{
         super(props);
         this.state = {
             socios:props.socios === undefined ? []:props.socios,
-            vehiculos:props.vehiculos === undefined ? []:props.socios,
+            vehiculos:props.vehiculos === undefined ? []:props.vehiculos,
             choferes:props.choferes,
             popUp:false,
             crearPersona:false,
