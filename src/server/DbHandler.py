@@ -14,13 +14,19 @@ class DBServer:
 
 
     def __init__(self):
-        self.con,self.cur = conectar()
+        self.con,self.cur = None,None
         #self.actualizarUsuarios()
         self.usuarios ={}
 
     def aceptarCambios(self):
         self.con.commit()
         return
+
+    def conectar(self):
+        self.con,self.cur = conectar()
+    
+    def desconectar(self):
+        self.con.close()
 
     def contestarQuery(self,sql,data=None,fetch=True):
 
