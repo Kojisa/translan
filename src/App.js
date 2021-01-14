@@ -4,17 +4,22 @@ import './App.css';
 //import Main from './app/main';
 import 'typeface-roboto';
 import Main from './app/MenuPrincipal';
-import IngresoRemiseria from './app/Remiseria/ingresoRemiseria';
-import RenovacionAgencia from './app/Remiseria/RenovacionAgencia';
-import ModificarSocios from './app/Remiseria/ModificacionSocios';
-import SubirArchivos from './app/SubidaArchivo/SubidaArchivo';
+import IngresarVehiculo from './app/Vehiculos/IngresarVehiculos';
+import Listado from './app/Vehiculos/ListarVehiculo';
+//import ArchivosPendientes from './app/Utils/ArchivosPendients';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <header >
-          <SubirArchivos/>
+          <Main 
+          vehiculo={1}
+          funSubir={()=>console.log('algo')}
+          funAct={()=>console.log('algo2')}
+          funHome={()=>console.log('Home')}
+          funCambio={()=>console.log('cambio')}
+          />
         </header>
       </div>
     );

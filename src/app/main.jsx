@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {IconButton,Input,Paper,AppBar,Button
+import {IconButton,Input,Paper,AppBar,Button,Grid,Paper
     ,Toolbar,Typography,withStyles,Fab} from '@material-ui/core';
 import NuevoAgente from './Agentes/NuevoAgente';
 import NuevoVehiculo from './Vehiculos/NuevoVehiculo';
@@ -64,19 +64,21 @@ class Botonera extends Component{
             </IconButton>)
         })
 
-        return this.state.botones.map((elem,index)=><Button variant='contained' color='primary' onClick={()=>this.funVista(elem)}
+        return this.state.botones.map((elem,index)=><Grid item xs={3}>  <Button variant='contained' color='primary' onClick={()=>this.funVista(elem)}
                                                      style={{marginLeft:'10px',display:'inline-block'}}
                                                     >
                                                     {elem.nombre}
                                                     {elem.icono}
-                                                    </Button>)
+                                                    </Button></Grid>)
     }
 
     render(){
 
         return(
             <div>
-                {this.armarBotones()}
+                <Grid container spacing={2}>
+                    {this.armarBotones()}
+                </Grid>
             </div>
         )
     }
@@ -112,7 +114,7 @@ class Main extends Component{
         }
 
         return(
-            <Paper style={{width:'100vw',height:'100vh'}}>
+            <div style={{width:'100vw',height:'100vh'}}>
                 <AppBar 
                     position='static'>
                     <Toolbar>
@@ -123,7 +125,7 @@ class Main extends Component{
                     </Toolbar>
                 </AppBar>
                 {render}
-            </Paper>
+            </div>
         )
     }
 }

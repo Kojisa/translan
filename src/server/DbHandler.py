@@ -5,7 +5,7 @@ import datetime
 HOST = "localhost"
 USER = "root"
 PASS = '1991'
-DBNAME = "mydb"
+DBNAME = "agencias"
 
 
 class DBServer:
@@ -14,7 +14,7 @@ class DBServer:
 
 
     def __init__(self):
-        self.con,self.cur = None,None
+        self.con,self.cur = conectar()
         #self.actualizarUsuarios()
         self.usuarios ={}
 
@@ -30,7 +30,6 @@ class DBServer:
 
     def contestarQuery(self,sql,data=None,fetch=True):
 
-        self.con,self.cur = conectar()
         self.cur.execute(sql,data)
         if fetch == False:
             return self.cur.lastrowid

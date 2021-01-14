@@ -2,6 +2,14 @@ from bottle import Bottle, route, run, response, hook, request, static_file
 import bottle
 import os,signal
 import paste
+from json import dumps,loads
+from agencias import Agencias
+from vehiculos import Vehiculos
+from personas import Personas
+
+from DbHandler import DBServer
+
+
 
 default = Bottle()
 
@@ -31,13 +39,34 @@ def dummy():
 #default.mount('/modulo',modulo.modulo)
 
 
-@default.route('/recibir',method='POST')
+default.mount('/agencias',Agencias)
+default.mount('/vehiculos',Vehiculos)
+default.mount('/personas',Personas)
+
+
+@default.route('/archivos/recibir',method='POST')
 def recibirArchivo():
     
-    datos = request.json['datos']
-    print datos
+    datos = loads(request.forms.get('datos'))
+    nombre = datos['nombre'].replace(':','')
+    request.files['file'].filename = nombre
+    request.files['file'].save('./archivos/',True)
+
+    ordenGuardar = 'INSERT INTO archivos(idvinculante,tipo,ruta,tipovinculante)\
+        VALUES(%(idvinculo)s,%(tipo)s,%(ruta)s,%(tipovinculante)s);'
     
-    request.files['file'].save('./archivo/',True)
+    db = DBServer()
+
+    idarchivo = db.contestarQuery(ordenGuardar,{
+        'idvinculo':datos['idvinculo'],
+        'tipo':datos['tipo'],
+        'tipovinculante':datos['tipovinculante'],
+        'ruta':'./archivos/' + nombre,
+    },False)
+
+    db.aceptarCambios()
+
+    return dumps({'archivo':idarchivo})
 
 
 @default.route('/<modulo>')
@@ -54,4 +83,4 @@ def devolverPagina():
 
 
 
-run(default,host = '0.0.0.0', port = 1800,server='paste')
+run(default,host = '0.0.0.0', port = 1800)#,server='paste')

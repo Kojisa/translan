@@ -80,7 +80,6 @@ export default class AMBRemiserias extends Component{
         this.setState(dic);
     }
 
-
     render(){
 
         let muestra = null;
